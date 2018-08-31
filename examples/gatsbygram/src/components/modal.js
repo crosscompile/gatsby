@@ -1,5 +1,6 @@
 import React from "react"
-import Modal from "react-modal"
+import Modal from "react-modal2"
+
 import CaretRight from "react-icons/lib/fa/caret-right"
 import CaretLeft from "react-icons/lib/fa/caret-left"
 import Close from "react-icons/lib/md/close"
@@ -12,7 +13,7 @@ import { rhythm } from "../utils/typography"
 
 let posts
 
-Modal.setAppElement(`#___gatsby`)
+Modal.getApplicationElement = () => document.getElementById(`___gatsby`)
 
 class GatsbyGramModal extends React.Component {
   static propTypes = {
@@ -94,33 +95,33 @@ class GatsbyGramModal extends React.Component {
           if (!posts) {
             posts = data.allPostsJson.edges.map(e => e.node)
           }
+
           return (
             <Modal
               isOpen={this.props.isOpen}
-              onRequestClose={() => push(`/`)}
-              style={{
-                overlay: {
-                  position: `fixed`,
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: `rgba(0, 0, 0, 0.75)`,
-                },
-                content: {
-                  position: `absolute`,
-                  border: `none`,
-                  background: `none`,
-                  padding: 0,
-                  top: 0,
-                  bottom: 0,
-                  right: 0,
-                  left: 0,
-                  overflow: `auto`,
-                  WebkitOverflowScrolling: `touch`,
-                },
+              onClose={() => push(`/`)}
+              closeOnEsc={true}
+              closeOnBackdropClick={true}
+              backdropStyles={{
+                position: `fixed`,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: `rgba(0, 0, 0, 0.75)`,
               }}
-              contentLabel="Modal"
+              modalStyles={{
+                position: `absolute`,
+                border: `none`,
+                background: `none`,
+                padding: 0,
+                top: 0,
+                bottom: 0,
+                right: 0,
+                left: 0,
+                overflow: `auto`,
+                WebkitOverflowScrolling: `touch`,
+              }}
             >
               <div
                 onClick={() => push(`/`)}

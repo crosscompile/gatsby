@@ -3,6 +3,8 @@ import React from "react"
 import HeartIcon from "react-icons/lib/fa/heart"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
+import { Flipped } from "react-flip-toolkit"
+import { Location } from "@reach/router"
 
 import { rhythm, scale } from "../utils/typography"
 import presets from "../utils/presets"
@@ -57,40 +59,57 @@ class Post extends React.Component {
           },
         }}
       >
-        <div
-          css={{
-            flexDirection: `column`,
-            flexShrink: 0,
-            position: `relative`,
-            overflow: `hidden`,
+        <Location>
+          {({ location: { pathname } }) => {
+            if (pathname.includes(id)) {
+              return null
+            }
+
+            return (
+              <Flipped
+                flipId={id}
+                onStart={el => (el.style.zIndex = 10)}
+                onComplete={el => (el.style.zIndex = ``)}
+              >
+                <div
+                  css={{
+                    flexDirection: `column`,
+                    flexShrink: 0,
+                    position: `relative`,
+                    overflow: `hidden`,
+                  }}
+                >
+                  <Img
+                    fluid={{ ...small }}
+                    css={{
+                      margin: 0,
+                      height: `100%`,
+                      width: `100%`,
+                      verticalAlign: `baseline`,
+                      position: `absolute`,
+                      top: 0,
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                    }}
+                  />
+                  <div
+                    css={{
+                      flexDirection: `column`,
+                      flexShrink: 0,
+                      position: `absolute`,
+                      top: 0,
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                    }}
+                  />
+                </div>
+              </Flipped>
+            )
           }}
-        >
-          <Img
-            fluid={{ ...small }}
-            css={{
-              margin: 0,
-              height: `100%`,
-              width: `100%`,
-              verticalAlign: `baseline`,
-              position: `absolute`,
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-            }}
-          />
-          <div
-            css={{
-              flexDirection: `column`,
-              flexShrink: 0,
-              position: `absolute`,
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-            }}
-          />
-        </div>
+        </Location>
+
         {/* overlay */}
         {this.state.hovering && (
           <div

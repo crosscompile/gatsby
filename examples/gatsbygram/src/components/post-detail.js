@@ -1,4 +1,5 @@
 import React from "react"
+import { Flipped } from "react-flip-toolkit"
 
 import presets from "../utils/presets"
 import typography, { rhythm, scale } from "../utils/typography"
@@ -91,7 +92,7 @@ class PostDetail extends React.Component {
       <div
         onClick={e => e.stopPropagation()}
         css={{
-          background: `white`,
+          background: `transparent`,
           display: `flex`,
           alignItems: `stretch`,
           flexDirection: `column`,
@@ -104,6 +105,7 @@ class PostDetail extends React.Component {
       >
         <div
           css={{
+            background: `white`,
             padding: rhythm(3 / 4),
             paddingBottom: 0,
             [presets.Tablet]: {
@@ -124,68 +126,63 @@ class PostDetail extends React.Component {
             <PostDetails />
           </div>
         </div>
-        <div
-          to={`/${id}/`}
-          css={{
-            display: `block`,
-            backgroundColor: `lightgray`,
-            flex: `1 0 0%`,
-            width: `100%`,
-            position: `relative`,
-          }}
+
+        <Flipped
+          flipId={id}
+          onStart={el => (el.style.zIndex = 10)}
+          onComplete={el => (el.style.zIndex = ``)}
         >
           <div
+            to={`/${id}/`}
             css={{
-              flexDirection: `column`,
-              flexShrink: 0,
+              display: `block`,
+              backgroundColor: `lightgray`,
+              flex: `1 0 0%`,
+              width: `100%`,
               position: `relative`,
-              paddingBottom: `100%`,
-              overflow: `hidden`,
             }}
           >
-            <img
-              alt={``}
-              key={big.src}
-              src={big.src}
-              srcSet={big.srcSet}
-              fluid="(min-width: 640px) 640px, 100vw"
-              css={{
-                margin: 0,
-                height: `100%`,
-                width: `100%`,
-                verticalAlign: `baseline`,
-                position: `absolute`,
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-              }}
-            />
             <div
               css={{
                 flexDirection: `column`,
                 flexShrink: 0,
-                position: `absolute`,
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
+                position: `relative`,
+                paddingBottom: `100%`,
+                overflow: `hidden`,
               }}
-            />
+            >
+              <img
+                alt={``}
+                key={big.src}
+                src={big.src}
+                srcSet={big.srcSet}
+                fluid="(min-width: 640px) 640px, 100vw"
+                css={{
+                  margin: 0,
+                  height: `100%`,
+                  width: `100%`,
+                  verticalAlign: `baseline`,
+                  position: `absolute`,
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                }}
+              />
+              <div
+                css={{
+                  flexDirection: `column`,
+                  flexShrink: 0,
+                  position: `absolute`,
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                }}
+              />
+            </div>
           </div>
-        </div>
-        <div
-          css={{
-            background: `white`,
-            padding: rhythm(3 / 4),
-            display: `block`,
-            [presets.Tablet]: {
-              display: `none`,
-            },
-          }}
-        >
-          <PostDetails />
-        </div>
+        </Flipped>
       </div>
     )
   }
